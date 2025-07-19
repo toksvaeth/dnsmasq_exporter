@@ -1,0 +1,27 @@
+# Git
+.git
+.gitignore
+.github
+
+# Documentation
+README.md
+CONTRIBUTING.md
+LICENSE
+
+# Build artifacts
+dist/
+dnsmasq_exporter*
+
+# Docker files
+Dockerfile
+.dockerignore
+
+# CI/CD
+travis/
+
+# Examples and test data
+examples/
+collector/testdata/
+
+# Misc
+*.md

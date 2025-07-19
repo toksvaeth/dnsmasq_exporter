@@ -1,13 +1,16 @@
 # build stage
-FROM golang:1.17.2-stretch AS build-env
-ADD . /src
-ENV CGO_ENABLED=0
+FROM golang:1.21-alpine AS build-env
 WORKDIR /src
-RUN go build -o dnsmasq_exporter
+COPY go.mod go.sum ./
+RUN go mod download
+COPY . .
+ENV CGO_ENABLED=0
+RUN go build -ldflags="-w -s" -o dnsmasq_exporter
 
 # final stage
 FROM scratch
 WORKDIR /app
 COPY --from=build-env /src/dnsmasq_exporter /app/
 USER 65534
+EXPOSE 9153
 ENTRYPOINT ["/app/dnsmasq_exporter"]
